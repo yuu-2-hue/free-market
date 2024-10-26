@@ -1,0 +1,14 @@
+body{
+    font-size: 12px;
+}
+
+.header__container{
+    max-width: 1515px;
+    text-align: center;
+}
+
+.header__inner{
+    background-color: rgba(0, 0, 0, 1);
+    text-align: left;
+    padding: 1.3%;
+}
