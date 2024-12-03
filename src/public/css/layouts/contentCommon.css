@@ -1,0 +1,118 @@
+.header__container{
+    text-align: center;
+}
+.header__logo img {
+    width: 300px;
+    height: auto;
+}
+.header__inner {
+    background-color: rgba(0, 0, 0, 1);
+    padding: 10px 20px;
+}
+.header__item{
+    max-width: 1400px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.header-search__input {
+    width: 500px;
+    border-radius: 5px;
+    padding: 2%;
+}
+
+.header-nav__item {
+    margin-inline: 10px;
+    list-style: none;
+}
+
+.header-nav__link {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 1);
+    text-decoration: none;
+}
+
+.header-nav__link--button {
+    font-size: 1rem;
+    vertical-align: middle;
+    color: rgba(0, 0, 0, 1);
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 1);
+    border-radius: 3px;
+    padding: 7px 20px;
+}
+
+.header-nav__button {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 1);
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .header__logo img{
+        width: 300px;
+        height: auto;
+        margin-block: 10px;
+    }
+    .header__inner {
+        background-color: rgba(0, 0, 0, 1);
+        text-align: center;
+        padding: 10px 20px;
+    }
+    .header__item {
+        max-width: 1400px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .header-nav {
+        justify-content: center;
+    }
+
+    .header-search__input {
+        width: 400px;
+        margin-bottom: 10px;
+        padding: 0.4%;
+    }
+
+    .header-nav__link--button {
+        padding: 5px 20px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .header-search__input {
+        width: 350px;
+        margin-bottom: 10px;
+        padding: 0.4%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .header__logo img {
+        width: 200px;
+        height: auto;
+    }
+    .header__inner {
+        background-color: rgba(0, 0, 0, 1);
+        padding: 10px 20px;
+    }
+    .header-search__input {
+        width: 250px;
+        margin-bottom: 10px;
+        padding: 0.1%;
+    }
+}

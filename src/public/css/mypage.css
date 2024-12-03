@@ -1,0 +1,249 @@
+/* マイページ画面 */
+.mypage-profile__container{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-inline: 200px;
+    padding-top: 50px;
+    padding-bottom: 5px;
+}
+/* ユーザの情報 */
+.profile{
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+.profile__image{
+    width: 150px;
+    height: 150px;
+}
+.profile__name{
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+/* プロフィール編集画面に遷移するボタン */
+.profile__button {
+    font-size: 1rem;
+    color: rgba(255, 85, 85, 1);
+    background-color: rgba(255, 255, 255, 1);
+    border: 2px solid rgba(255, 85, 85, 1);
+    border-radius: 5px;
+    transition: 0.25s;
+    padding: 5px 10px;
+}
+.profile__button:hover {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 85, 85, 1);
+    border: 2px solid rgba(255, 85, 85, 1);
+}
+
+/* マイページ画面のタブ */
+.mypage-tab__container {
+    display: flex;
+    justify-content: start;
+    border-bottom: 2px solid rgba(95, 95, 95, 1);
+    padding-inline: 200px;
+    padding-top: 50px;
+    padding-bottom: 5px;
+}
+.mypage-tab__item form button {
+    font-size: 1.5rem;
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding-right: 30px;
+}
+.item__tab--red {
+    color: red;
+}
+.item__tab--black {
+    color: black;
+}
+
+/* マイページ画面の商品一覧 */
+.mypage__container {
+    max-width: 1290px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 30px;
+    margin: 50px auto;
+}
+/* 商品のカード */
+.card__form {
+    position: relative;
+    width: 300px;
+    transition: 0.25s;
+    border-radius: 5px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.card__form:hover {
+    border-radius: 5px;
+    box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.card__item {
+    background: transparent;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: none;
+    padding: 0;
+}
+.card__item-img {
+    width: 300px;
+    height: 300px;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+.card__item-texts {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+.card__item-name, .card__item-status {
+    margin: 0;
+}
+.card__item-status {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    font-size: 70px;
+    background-color: rgba(78, 78, 78, 0.7);
+    color: red;
+    padding: 0;
+}
+
+@media screen and (max-width: 1400px) {
+    .mypage__container {
+        max-width: 890px;
+    }
+
+    .card__form {
+        width: 200px;
+    }
+    .card__item-img {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .mypage-profile__container {
+        padding-inline: 150px;
+    }
+
+    .mypage__container {
+        max-width: 660px;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .profile {
+        gap: 30px;
+    }
+    .profile__name {
+        font-size: 1.5rem;
+    }
+
+    /* プロフィール編集画面に遷移するボタン */
+    .profile__button {
+        font-size: 1rem;
+        padding: 5px 10px;
+        margin-top: 0px;
+    }
+
+    .mypage-tab__container {
+        padding-inline: 100px;
+        padding-top: 50px;
+    }
+
+    .card__form {
+        width: 200px;
+    }
+    .card__item-img {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .mypage-profile__container {
+        display: block;
+        text-align: center;
+        padding-inline: 100px;
+    }
+    .mypage-tab__container {
+        padding-inline: 70px;
+        padding-top: 30px;
+    }
+
+    .profile {
+        display: block;
+        text-align: center;
+        margin: 10px;
+    }
+    .profile__image {
+        width: 100px;
+        height: 100px;
+    }
+    .profile__name {
+        font-size: 1rem;
+    }
+    /* プロフィール編集画面に遷移するボタン */
+    .profile__button {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+        margin-top: 0px;
+    }
+
+    .mypage__container {
+        max-width: 430px;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .mypage-tab__unit {
+        padding-right: 30px;
+    }
+    .mypage-tab__unit form button {
+        font-size: 1rem;
+    }
+
+    .card__form {
+        width: 200px;
+    }
+    .card__item-img {
+        width: 200px;
+        height: 200px;
+    }
+    .card__item-name {
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .mypage-profile__container {
+        padding-inline: 50px;
+    }
+    .mypage__container {
+        max-width: 230px;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .card__form {
+        width: 100px;
+    }
+    .card__item-img {
+        width: 100px;
+        height: 100px;
+    }
+    .card__item-texts {
+        display: block;
+        padding: 0;
+    }
+    .card__item-name {
+        font-size: 0.5rem;
+    }
+}

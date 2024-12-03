@@ -15,16 +15,14 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->foreignId('condition_id')->constrained()->cascadeOnDelete();
             $table->string('name');
+            $table->string('brand')->nullable();
             $table->string('image');
             $table->text('detail');
             $table->Integer('price');
             $table->Integer('buy');
             $table->Integer('sell');
-            $table->Integer('favorite_count');
-            $table->Integer('comment_count');
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
         });

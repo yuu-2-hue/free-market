@@ -1,0 +1,106 @@
+.address__container {
+    margin: 0 auto;
+}
+
+.address__ttl {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 50px;
+}
+
+.form {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.address__wrapper {
+    width: 100%;
+}
+
+.address__item {
+    margin-bottom: 30px;
+}
+
+.item__name {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0 auto;
+}
+
+.item__input {
+    width: 100%;
+    border: 1px solid rgba(95, 95, 95, 1);
+    border-radius: 5px;
+    padding: 1.5%;
+}
+
+.button {
+    width: 100%;
+    border: 1px solid rgba(255, 85, 85, 1);
+    border-radius: 5px;
+    background-color: rgba(255, 85, 85, 1);
+    color: rgba(255, 255, 255, 1);
+    transition: 0.5s;
+    padding-block: 1.5%;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.button:hover {
+    width: 100%;
+    border: 1px solid rgba(255, 85, 85, 1);
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(0, 0, 0, 1);
+    padding-block: 1.5%;
+}
+
+.form__error {
+    color: rgba(255, 0, 0, 1);
+}
+
+@media screen and (max-width: 1200px) {
+    
+}
+
+@media screen and (max-width: 850px) {
+    .address__ttl h1 {
+        font-size: 2rem;
+    }
+
+    .form {
+        max-width: 400px;
+    }
+
+    .address__item {
+        margin-bottom: 25px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .address__ttl h1 {
+        font-size: 1rem;
+    }
+
+    .form {
+        max-width: 200px;
+        margin: 0 auto;
+    }
+
+    .address__item {
+        margin-bottom: 20px;
+    }
+
+    .address__ttl {
+        text-align: center;
+        font-size: 0.5rem;
+        margin-top: 50px;
+    }
+
+    .item__name {
+        font-size: 0.5rem;
+        font-weight: bold;
+        margin: 0 auto;
+    }
+}
