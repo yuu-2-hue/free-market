@@ -25,6 +25,7 @@ DB_PASSWORD=laravel_pass
 5. Mailtrapへログイン  
 下記URLよりmailtrapへログイン  
 <https://mailtrap.io/signin>
+> *会員登録していない場合は登録してください*  
 
 6. .envに追加する情報を取得  
 ![alt](mailtrap.png)
@@ -50,14 +51,14 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 8. Stripeへログイン  
 下記URLよりStripeへログイン  
-> *会員登録していない場合は登録してください*  
 <https://stripe.com/jp>
+> *会員登録していない場合は登録してください*  
 
 9. .envに追加する情報を取得
 ![alt](stripe.png)
 ``` text
 1. 実際に決済が実行されないようにテスト環境に設定
-2. .env情報をコピーする
+2. .env情報をコピーして.envに張り付ける
 ```
 
 10. .envに以下環境変数を追加
