@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Condition;
 use App\Models\Category;
+use App\Models\Favorite;
 
 class Product extends Model
 {
@@ -30,6 +31,11 @@ class Product extends Model
         {
             $query->where('name', 'like', '%' . $keyword . '%');
         }
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
     }
 
     public function condition()

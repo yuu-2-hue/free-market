@@ -14,52 +14,14 @@ class ListController extends Controller
     public function index(Request $request)
     {
         $products = Product::All();
-        $favorites = Favorite::All();
-        $tab = $request->query('tab');
-        if($tab == null) $tab = 'list';
-        $lists = [];
+        $mylists = Product::with('favorites')->whereHas('favorites', function ($query) {
+            $query->where('user_id', Auth::id());
+        })->get();
 
         $keyword = $request->session()->get('keyword');
-        if($keyword != null) $products = $request->session()->get('searchLists');
+        if ($keyword != null) $products = $request->session()->get('searchLists');
 
-        if($tab == 'mylist')
-        {
-            if(Auth::check())
-            {
-                foreach($products as $product)
-                {
-                    if($product->sell != Auth::id())
-                    {
-                        foreach($favorites as $favorite)
-                        {
-                            if(Auth::id() == $favorite->user_id && $product->id == $favorite->product_id)
-                            {
-                                array_push($lists, $product);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        else
-        {
-            if(Auth::check())
-            {
-                foreach($products as $product)
-                {
-                    if($product->sell != Auth::id())
-                    {
-                        array_push($lists, $product);
-                    }
-                }
-            }
-            else
-            {
-                $lists = $products;
-            }
-        }
-
-        return view('index',  compact('lists', 'tab', 'keyword'));
+        return view('index',  compact('products', 'mylists', 'keyword'));
     }
 
     // 検索機能
