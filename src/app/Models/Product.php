@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Condition;
 use App\Models\Category;
-use App\Models\ProductCategory;
 
 class Product extends Model
 {
@@ -33,7 +32,7 @@ class Product extends Model
         }
     }
 
-    public function conditions()
+    public function condition()
     {
         return $this->belongsTo(Condition::class);
     }
