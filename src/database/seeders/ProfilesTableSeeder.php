@@ -41,23 +41,23 @@ class ProfilesTableSeeder extends Seeder
             'building' => 'マンション',
         ];
         DB::table('profiles')->insert($param);
-        $param = [
-            'user_id' => '4',
-            'name' => 'ふが',
-            'image' => 'img/kkrn_icon_user_14.png',
-            'post_code' => '123-4567',
-            'address' => '東京都港区六本木',
-            'building' => 'マンション',
-        ];
-        DB::table('profiles')->insert($param);
-        $param = [
-            'user_id' => '5',
-            'name' => 'はが',
-            'image' => 'img/kkrn_icon_user_14.png',
-            'post_code' => '123-4567',
-            'address' => '東京都港区六本木',
-            'building' => 'マンション',
-        ];
-        DB::table('profiles')->insert($param);
+        // $param = [
+        //     'user_id' => '4',
+        //     'name' => 'ふが',
+        //     'image' => 'img/kkrn_icon_user_14.png',
+        //     'post_code' => '123-4567',
+        //     'address' => '東京都港区六本木',
+        //     'building' => 'マンション',
+        // ];
+        // DB::table('profiles')->insert($param);
+        // $param = [
+        //     'user_id' => '5',
+        //     'name' => 'はが',
+        //     'image' => 'img/kkrn_icon_user_14.png',
+        //     'post_code' => '123-4567',
+        //     'address' => '東京都港区六本木',
+        //     'building' => 'マンション',
+        // ];
+        // DB::table('profiles')->insert($param);
     }
 }

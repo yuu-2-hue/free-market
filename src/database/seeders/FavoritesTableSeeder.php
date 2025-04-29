@@ -15,7 +15,7 @@ class FavoritesTableSeeder extends Seeder
     public function run()
     {
         $param = [
-            'user_id' => 1,
+            'user_id' => 3,
             'product_id' => 1,
         ];
         DB::table('favorites')->insert($param);
@@ -25,7 +25,7 @@ class FavoritesTableSeeder extends Seeder
         ];
         DB::table('favorites')->insert($param);
         $param = [
-            'user_id' => 4,
+            'user_id' => 3,
             'product_id' => 5,
         ];
         DB::table('favorites')->insert($param);

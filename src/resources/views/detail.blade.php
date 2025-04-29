@@ -27,6 +27,7 @@
                     <img src="{{ asset('img/comment.svg') }}" alt="">
                     <p>{{ $commentCount }}</p>
                 </a>
+                <a href="/chat/{{$product->id}}/{{$product->sell}}/{{Auth::id()}}">取引</a>
             </div>
         </div>
 

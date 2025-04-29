@@ -7,6 +7,7 @@ use App\Http\Controllers\ListController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SellController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,13 @@ Route::middleware('verified')->group(function () {
 
     // 購入処理
     Route::post('/purchase/{item_id}/checkout', [PurchaseController::class, 'store']);
+
+    // チャット画面
+    Route::get('/chat/{item_id}/{seller_id}/{purchaser_id}', [ChatController::class, 'index'])->name('chat.index');
+    Route::post('/chat/{item_id}/{seller_id}/{purchaser_id}', [ChatController::class, 'store']);
+    Route::post('/chat/{item_id}/{seller_id}/{purchaser_id}/rating', [ChatController::class, 'rating']);
+    Route::post('/chat/{item_id}/{seller_id}/{purchaser_id}/message', [ChatController::class, 'edit']);
+    Route::post('/chat/{productId}/{sellId}/{userId}/save-message', [ChatController::class, 'saveMessage']);
 
     Route::middleware('register')->group(function(){
         // 購入画面
