@@ -26,31 +26,6 @@ class ProfileController extends Controller
         return view('profile', compact('profile', 'userName', 'isAddProfile', 'keyword'));
     }
 
-    // マイページの表示
-    public function mypage(Request $request)
-    {
-        $profile = Profile::GetProfileData();
-        $lists = [];
-        $tab = $request->query('tab');
-        if($tab == null) $tab = 'sell';
-
-        if($tab == 'buy')
-        {
-            $tab = 'buy';
-            $lists = Product::GetProducts('buy');
-        }
-        else
-        {
-            $lists = Product::GetProducts('sell');
-        }
-
-        $isAddImage = false;
-        if($profile->image != 'img/kkrn_icon_user_14.png') $isAddImage = true;
-
-        $keyword = $request->session()->get('keyword');
-
-        return view('mypage',  compact('lists', 'tab', 'profile', 'isAddImage', 'keyword'));
-    }
 
     // プロフィールの登録機能
     public function store(ProfileRequest $request)

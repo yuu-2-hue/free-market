@@ -1,135 +1,171 @@
-/* チャットページ */
-.chat__container{
+/* ====================
+    チャットページ全体
+==================== */
+.chat__container {
     display: flex;
     height: 100vh;
     height: calc(var(--vh, 1vh) * 100);
 }
 
-/* その他のお取引 */
-.side__container{
+/* ====================
+    サイドメニュー
+==================== */
+.side__container {
     width: 20%;
-    background-color: rgba(134, 134, 134, 1);
+    background-color: #868686;
     text-align: center;
 }
-.side__container p{
+
+.side__container p {
     color: white;
     font-size: 2rem;
     text-align: center;
 }
-.side__container a{
+
+.side__container a {
+    display: block;
+    width: 250px;
     color: black;
-    background-color: rgba(238, 239, 235, 1);
+    background-color: #eeefeb;
     font-size: 2rem;
     text-align: center;
     text-decoration: none;
     padding-inline: 50px;
-    margin: 0;
+    margin: 10px auto;
 }
 
-/* コンテンツ */
-.main__container{
+/* ====================
+    メインチャット画面
+==================== */
+.main__container {
     width: 80%;
 }
 
-/* チャット相手 */
-.chat-partner__wrapper{
+/* チャット相手情報 */
+.chat-partner__wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid rgba(95, 95, 95, 1);
+    border-bottom: 2px solid #5f5f5f;
     padding: 10px 50px;
 }
-.chat-partner__wrapper .info{
+
+.chat-partner__wrapper .info {
     display: flex;
     align-items: center;
 }
-.chat-partner__wrapper .info img{
+
+.chat-partner__wrapper .info img {
     width: 80px;
     height: 80px;
-    background-color: rgba(217, 217, 217, 1);
-    border-radius: 50px;
+    background-color: #d9d9d9;
+    border-radius: 50%;
     object-fit: cover;
 }
-.chat-partner__wrapper .info p{
+
+.chat-partner__wrapper .info p {
     font-size: 2rem;
-    margin: 0;
+    margin: 0 0 0 10px;
 }
 
 /* 商品情報 */
-.product__wrapper{
+.product__wrapper {
     display: flex;
     align-items: center;
-    border-bottom: 2px solid rgba(95, 95, 95, 1);
+    border-bottom: 2px solid #5f5f5f;
     padding: 10px 50px;
 }
-.product__wrapper img{
+
+.product__wrapper img {
     width: 200px;
     height: 200px;
+    object-fit: cover;
 }
-.product__wrapper .info{
+
+.product__wrapper .info {
     padding-left: 20px;
 }
-.product__wrapper .info .name{
+
+.product__wrapper .info .name {
     font-size: 3rem;
     margin: 0;
 }
-.product__wrapper .info .price{
+
+.product__wrapper .info .price {
     font-size: 2rem;
     margin: 0;
 }
 
-/* チャット履歴 */
-.message-list__wrapper{
+/* ====================
+    チャットメッセージ
+==================== */
+.message-list__wrapper {
     height: 400px;
     overflow-y: scroll;
     padding: 10px 50px;
 }
 
-/* 受信側 */
-.receiver__wrapper .user-info{
+.chat__image img{
+    width: 200px;
+    height: auto;
+}
+
+/* 受信メッセージ */
+.receiver__wrapper .user-info {
     display: flex;
     align-items: center;
 }
+.receiver__wrapper{
+    margin-top: 10px;
+}
+
 .receiver__wrapper .user-info img {
     width: 60px;
     height: 60px;
-    background-color: rgba(217, 217, 217, 1);
-    border-radius: 50px;
+    background-color: #d9d9d9;
+    border-radius: 50%;
     object-fit: cover;
+    margin-right: 10px;
 }
-.receiver__wrapper .user-info p{
+
+.receiver__wrapper .user-info p {
     margin: 0;
 }
-.receiver__wrapper .message{
+
+.receiver__wrapper .message {
     width: 600px;
     height: 45px;
     border: none;
     outline: none;
     border-radius: 4px;
-    background-color: rgba(217, 217, 217, 1);
+    background-color: #d9d9d9;
     padding: 10px;
+    margin-top: 5px;
 }
 
-/* 送信側 */
+/* 送信メッセージ */
 .sender__wrapper .user-info {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
 }
-.sender__wrapper .user-info img {
-    width: 60px;
-    height: 60px;
-    background-color: rgba(217, 217, 217, 1);
-    border-radius: 50px;
-    object-fit: cover;
-    margin-left: 10px;
+.sender__wrapper{
+    margin-top: 10px;
 }
+
 .sender__wrapper .user-info p {
     margin: 0;
 }
-.message__form{
-    text-align: right;
+
+.sender__wrapper .user-info img {
+    width: 60px;
+    height: 60px;
+    background-color: #d9d9d9;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 10px;
 }
+
 .sender__wrapper .message {
     display: block;
     width: 600px;
@@ -137,33 +173,54 @@
     border: none;
     outline: none;
     border-radius: 4px;
-    background-color: rgba(217, 217, 217, 1);
+    background-color: #d9d9d9;
     padding: 10px;
-    margin: 0 0 0 auto;
+    margin: 5px 0 0 auto;
 }
 
-/* バリデーションエラー */
-.form__error{
-    color: red;
-    padding-inline: 50px;
+.message__form {
+    text-align: right;
 }
 
-/* メッセージ入力欄 */
-.message-send__wrapper form{
+.message__form button{
+    color: rgba(95, 95, 95, 1);
+    background-color: transparent;
+    outline: none;
+    border: none;
+}
+.message__form button:hover {
+    text-decoration: underline;
+}
+
+/* ====================
+    メッセージ送信
+==================== */
+.message-send__wrapper form {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 60px;
 }
-.message-send__wrapper form .message{
+
+.message-send__wrapper form .message {
     width: 85%;
     padding: 5px;
 }
+
 .message-send__wrapper form button {
     background-color: transparent;
     border: none;
     outline: none;
+    width: 4%;
+    padding: 0;
 }
+
+.message-send__wrapper form button img {
+    width: 100%;
+    height: auto;
+}
+
+/* ファイル選択 */
 .file__label {
     display: inline-block;
     text-align: center;
@@ -175,78 +232,90 @@
     padding: 5px 10px;
     margin: 0;
 }
+
 input[type="file"] {
     display: none;
 }
-.message-send__wrapper form button{
-    width: 4%;
-    padding: 0;
-}
-.message-send__wrapper form button img{
-    width: 100%;
-    height: auto;
+
+/* ====================
+    バリデーションエラー
+==================== */
+.form__error {
+    color: red;
+    padding-inline: 50px;
 }
 
-/* モーダル */
-.modal__container{
+/* ====================
+    モーダルウィンドウ
+==================== */
+.modal__container {
     position: fixed;
     top: 30%;
     left: 30%;
     z-index: 1;
     width: 700px;
-    background-color: rgba(253, 252, 230, 1);
+    background-color: #fdfce6;
     visibility: hidden;
     opacity: 0;
     border-radius: 15px;
+    transition: all 0.3s ease;
 }
+
 .modal__container:target {
     visibility: visible;
     opacity: 1;
 }
-.modal__container h2{
-    border-bottom: 1px solid rgba(0, 0, 0, 1);
+
+.modal__container h2 {
+    border-bottom: 1px solid #000;
     padding: 20px;
+    margin: 0;
 }
-.modal__container .evaluation{
-    border-bottom: 1px solid rgba(0, 0, 0, 1);
+
+.modal__container .evaluation {
+    padding: 20px;
+    border-bottom: 1px solid #000;
 }
-/* 評価 */
+
+/* 評価（星） */
 .star-rating {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-around;
 }
+
 .star-rating input {
     display: none;
 }
+
 .star-rating label {
     font-size: 5rem;
     color: #ccc;
     cursor: pointer;
 }
-.star-rating input:checked~label {
-    color: gold;
-}
+
+.star-rating input:checked~label,
 .star-rating label:hover,
 .star-rating label:hover~label {
     color: gold;
 }
-.modal__container .evaluation{
-    padding: 20px;
-}
+
 /* 評価送信ボタン */
 .modal__container .button {
     text-align: right;
     padding: 20px;
 }
+
 .modal__container .button button {
-    background-color: transparent;
-    outline: none;
+    background-color: #ff8282;
+    color: white;
     border: none;
-    background-color: rgba(255, 130, 130, 1);
+    outline: none;
     border-radius: 5px;
     padding: 10px 20px;
+    cursor: pointer;
 }
+
 .modal__container .button a {
     text-decoration: none;
     color: white;

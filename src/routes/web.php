@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MypageController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\PurchaseController;
@@ -37,7 +38,7 @@ Route::middleware('verified')->group(function () {
     Route::get('/chat/{item_id}/{seller_id}/{purchaser_id}', [ChatController::class, 'index'])->name('chat.index');
     Route::post('/chat/{item_id}/{seller_id}/{purchaser_id}', [ChatController::class, 'store']);
     Route::post('/chat/{item_id}/{seller_id}/{purchaser_id}/rating', [ChatController::class, 'rating']);
-    Route::post('/chat/{item_id}/{seller_id}/{purchaser_id}/message', [ChatController::class, 'edit']);
+    Route::post('/chat/{item_id}/{seller_id}/{purchaser_id}/message', [ChatController::class, 'message']);
     Route::post('/chat/{productId}/{sellId}/{userId}/save-message', [ChatController::class, 'saveMessage']);
 
     Route::middleware('register')->group(function(){
@@ -53,7 +54,7 @@ Route::middleware('verified')->group(function () {
         Route::post('/sell', [SellController::class, 'exhibit']);
 
         // マイページ画面
-        Route::get('/mypage', [ProfileController::class, 'mypage'])->name('mypage');
+        Route::get('/mypage', [MypageController::class, 'index'])->name('mypage');
     });
 });
 

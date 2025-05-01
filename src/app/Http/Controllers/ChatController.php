@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ChatRequest;
 use Illuminate\Http\Request;
 
+use App\Notifications\MessageReceived;
+
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Chat;
@@ -14,84 +16,95 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
-    public function index($productId, $seller, $purchaser)
+    // チャット画面表示
+    public function index($productId, $sellerId, $purchaserId)
     {
-        $user = User::Find(Auth::id());
-        $product = Product::Find($productId);
-        $rooms = Room::where('product_id', $productId)->where('seller', $seller)->where('purchaser', $purchaser)->get();
-        $receiver = User::Find($seller);
-        $chats = [];
-        foreach($rooms as $room)
-        {
-            $chats = Chat::where('room_id', $room->id)->get();
-            if ($product->sell == Auth::id()) {
-                $receiver = User::Find($room->purchaser);
-            } else {
-                $receiver = User::Find($room->seller);
-            }
-        }
+        $user = Auth::user();
+        $product = Product::findOrFail($productId);
 
-        return view('chat', compact('user', 'product', 'receiver', 'chats'));
+        $room = Room::where('product_id', $productId)
+            ->where('seller', $sellerId)
+            ->where('purchaser', $purchaserId)
+            ->first();
+
+        $chats = $room ? Chat::where('room_id', $room->id)->get() : collect();
+
+        // 相手ユーザーの取得
+        $receiverId = ($product->sell == $user->id) ? $room->purchaser ?? $purchaserId : $room->seller ?? $sellerId;
+        $receiver = User::find($receiverId);
+
+        // 取引中のルーム一覧
+        $transactions = Room::where('seller', $user->id)
+            ->orWhere('purchaser', $user->id)
+            ->get();
+
+        // 未読通知を既読に
+        $user->unreadNotifications->markAsRead();
+
+        return view('chat', compact('user', 'product', 'receiver', 'room', 'chats', 'transactions'));
     }
 
-    public function store(ChatRequest $request, $productId, $seller, $purchaser)
+    // メッセージ送信
+    public function store(ChatRequest $request, $productId, $sellerId, $purchaserId)
     {
-        $rooms = Room::where('product_id', $productId)->where('seller', $seller)->where('purchaser', $purchaser)->get();
-        $roomId = 0;
-        if(count($rooms) == 0) {
-            Room::create([
+        $room = Room::firstOrCreate([
                 'product_id' => $productId,
-                'seller' => $seller,
-                'purchaser' => $purchaser,
+                'seller' => $sellerId,
+                'purchaser' => $purchaserId,
             ]);
-            $roomId = Room::orderBy('id', 'desc')->first()->id;
-        }
-        else {
-            foreach($rooms as $room) {
-                $roomId = $room->id;
-            }
-        }
 
+        $imagePath = null;
         if ($request->hasFile('image')) {
-            $file_name = $request->file('image')->getClientOriginalName();
-            $imagePath = 'img/' . $file_name;
-            $request->file('image')->storeAs('public/img', $imagePath);
-        }
-        else {
-            $imagePath = null;
+            $fileName = $request->file('image')->getClientOriginalName();
+            $imagePath = 'img/' . $fileName;
+            $request->file('image')->storeAs('public', $imagePath);
         }
 
-        Chat::create([
-            'room_id' => $roomId,
+        $message = Chat::create([
+            'room_id' => $room->id,
             'sender' => Auth::id(),
             'message' => $request->message,
             'image' => $imagePath,
         ]);
 
-        return redirect()->route('chat.index', ['item_id' => $productId, 'seller_id' => $seller, 'purchaser_id' => $purchaser]);
+        $receiverId = (Auth::id() == $sellerId) ? $purchaserId : $sellerId;
+        $receiver = User::find($receiverId);
+        $receiver->notify(new MessageReceived($message));
+
+        return redirect()->route('chat.index', [
+            'item_id' => $productId,
+            'seller_id' => $sellerId,
+            'purchaser_id' => $purchaserId,
+        ]);
     }
 
-    public function edit(Request $request, $productId, $seller, $purchaser)
+    // メッセージ編集・削除
+    public function message(Request $request, $productId, $sellerId, $purchaserId)
     {
-        if($request->has('edit'))
-        {
-            Chat::Find($request->id)->update([
-                'message' => $request->message,
-            ]);
-        }
-        else if($request->has('delete'))
-        {
-            Chat::Find($request->id)->delete();
+        $chat = Chat::findOrFail($request->id);
+
+        if ($request->has('edit')) {
+            $chat->update(['message' => $request->message]);
+        } elseif ($request->has('delete')) {
+            $chat->delete();
         }
 
-        return redirect()->route('chat.index', ['item_id' => $productId, 'seller_id' => $seller, 'purchaser_id' => $purchaser]);
+        return redirect()->route('chat.index', [
+            'item_id' => $productId,
+            'seller_id' => $sellerId,
+            'purchaser_id' => $purchaserId,
+        ]);
     }
 
-    public function rating(Request $request, $productId, $seller, $purchaser)
+    // 評価登録とルーム削除
+    public function rating(Request $request, $productId, $sellerId, $purchaserId)
     {
-        Room::where('product_id', $productId)->where('seller', $seller)->where('purchaser', $purchaser)->delete();
+        Room::where('product_id', $productId)
+            ->where('seller', $sellerId)
+            ->where('purchaser', $purchaserId)
+            ->delete();
 
-        Rating::Create([
+        Rating::create([
             'user_id' => Auth::id(),
             'product_id' => $productId,
             'rating' => $request->rating,
@@ -100,13 +113,10 @@ class ChatController extends Controller
         return redirect()->route('index');
     }
 
+    // 入力内容のセッション保存（自動保存用）
     public function saveMessage(Request $request)
     {
-        // メッセージをセッションに保存
-        session([
-            'chat_message' => $request->input('message'),
-        ]);
-
+        session(['chat_message' => $request->input('message')]);
         return response()->json(['status' => 'ok']);
     }
 }
