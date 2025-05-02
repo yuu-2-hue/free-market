@@ -100,7 +100,7 @@ class ChatController extends Controller
         ]);
     }
 
-    // 評価登録とルーム削除
+    // 評価登録とルーム削除(取引完了)
     public function rating(Request $request, $productId, $sellerId, $purchaserId)
     {
         Room::where('product_id', $productId)
@@ -110,7 +110,6 @@ class ChatController extends Controller
 
         Rating::create([
             'user_id' => $sellerId,
-            'product_id' => $productId,
             'rating' => $request->rating,
         ]);
 

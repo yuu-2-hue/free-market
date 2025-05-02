@@ -77,7 +77,7 @@ class ProductsTableSeeder extends Seeder
             'detail' => '高音質のレコーディング用マイク',
             'price' => '8000',
             'buy' => '0',
-            'sell' => '1',
+            'sell' => '2',
         ];
         DB::table('products')->insert($param);
         $param = [
@@ -88,7 +88,7 @@ class ProductsTableSeeder extends Seeder
             'detail' => 'おしゃれなショルダーバッグ',
             'price' => '3500',
             'buy' => '0',
-            'sell' => '1',
+            'sell' => '2',
         ];
         DB::table('products')->insert($param);
         $param = [
@@ -99,7 +99,7 @@ class ProductsTableSeeder extends Seeder
             'detail' => '使いやすいタンブラー',
             'price' => '500',
             'buy' => '0',
-            'sell' => '1',
+            'sell' => '2',
         ];
         DB::table('products')->insert($param);
         $param = [
@@ -110,7 +110,7 @@ class ProductsTableSeeder extends Seeder
             'detail' => '手動のコーヒーミル',
             'price' => '4000',
             'buy' => '0',
-            'sell' => '1',
+            'sell' => '2',
         ];
         DB::table('products')->insert($param);
         $param = [
@@ -121,7 +121,7 @@ class ProductsTableSeeder extends Seeder
             'detail' => '便利なメイクアップセット',
             'price' => '2500',
             'buy' => '0',
-            'sell' => '1',
+            'sell' => '2',
         ];
         DB::table('products')->insert($param);
     }

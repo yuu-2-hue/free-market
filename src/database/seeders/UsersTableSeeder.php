@@ -17,12 +17,11 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        //User::factory()->count(5)->create();
         $param = [
             'name' => '長谷川',
             'email' => 'hasegawa@example.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('password'),
+            'password' => Hash::make('hasegawa'),
             'remember_token' => Str::random(10),
         ];
         DB::table('users')->insert($param);

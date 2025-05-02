@@ -1,10 +1,26 @@
 # フリマ
 
 ## 環境構築
-**Dockerビルド**
+**gitクローン**
 1. `git clone git@github.com:yuu-2-hue/free-market.git`
-2. DockerDesktopアプリを立ち上げる
-3. `docker-compose up -d --build`
+2. GitHubでリモートリポジトリ作成
+3. リポジトリの紐づけ先を変更
+    ``` bash
+    git remote set-url origin 作成したリポジトリのurl
+    git remote -v
+    ```
+4. 現在のローカルリポジトリのデータをリモートリポジトリに反映
+    ``` bash
+    git add .
+    git commit -m "リモートリポジトリの変更"
+    git push origin main
+    ```
+    エラーが発生する場合は下記コードを実行してください  
+    `sudo chmod -R 777 *`
+
+**Dockerビルド**
+1. DockerDesktopアプリを立ち上げる
+2. `docker-compose up -d --build`
 
 **Laravel環境構築**
 1. `docker-compose exec php bash`
@@ -84,12 +100,22 @@ php artisan migrate
 
 14. シーディングの実行
 ``` bash
-php artisan db:seedphp artisan storage:link
+php artisan db:seed
 ```
 15. シンボリックリンク作成
 ``` bash
 php artisan storage:link
 ```
+
+### テーブル
+https://docs.google.com/spreadsheets/d/1_CKgkV9FN0fwd3D9EIlrZF6fcDTNv2xwgYK6WGo1kfc/edit?usp=sharing
+
+### ユーザーダミーデータ
+| 名前 | メールアドレス | パスワード |
+| :----: | :----: | :----: |
+| 長谷川 | hasegawa@example.com | hasegawa |
+| 山本 | yamamoto@example.com | yamamoto |
+| 中川 | nakagawa@example.com | nakagawa |
 
 ### 使用技術
 * PHP 7.4.9
