@@ -12,7 +12,11 @@ use App\Models\Product;
 use App\Models\Chat;
 use App\Models\Room;
 use App\Models\Rating;
+
+use App\Mail\CompletedMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
+
 
 class ChatController extends Controller
 {
@@ -105,10 +109,16 @@ class ChatController extends Controller
             ->delete();
 
         Rating::create([
-            'user_id' => Auth::id(),
+            'user_id' => $sellerId,
             'product_id' => $productId,
             'rating' => $request->rating,
         ]);
+
+        $user = User::Find(Auth::id());
+        $seller = User::Find($sellerId);
+        $data = ['name' => $user->name];
+
+        Mail::to($seller->email)->send(new CompletedMail($data));
 
         return redirect()->route('index');
     }
