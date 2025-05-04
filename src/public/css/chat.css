@@ -68,6 +68,14 @@
     margin: 0 0 0 10px;
 }
 
+.chat-partner__wrapper .button a{
+    text-decoration: none;
+    color: white;
+    background-color: #ff8282;
+    border-radius: 30px;
+    padding: 10px 20px;
+}
+
 /* 商品情報 */
 .product__wrapper {
     display: flex;

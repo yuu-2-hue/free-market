@@ -9,11 +9,13 @@
     {{-- サイドバー（他の取引） --}}
     <div class="side__container">
         <p>その他のお取引</p>
+        @if(Auth::id() == $product->sell)
         @foreach($transactions as $transaction)
         <a href="/chat/{{ $transaction->product_id }}/{{ $transaction->seller }}/{{ $transaction->purchaser }}">
             {{ $transaction->product->name }}
         </a>
         @endforeach
+        @endif
     </div>
 
     {{-- メインチャットエリア --}}
@@ -25,9 +27,11 @@
                 <img src="{{ asset('storage/'.$receiver->profile->image) }}" alt="ユーザー画像">
                 <p>「{{ $receiver->name }}」さんとの取引画面</p>
             </div>
+            @if(Auth::id() != $product->sell)
             <div class="button">
                 <a href="#modal">取引完了</a>
             </div>
+            @endif
         </div>
 
         {{-- 商品情報 --}}
