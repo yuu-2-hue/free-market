@@ -178,7 +178,10 @@
         max-width: 890px;
     }
 
-    .card__form,
+    .card__form{
+        width: 200px;
+    }
+
     .card__item-img {
         width: 200px;
         height: 200px;
@@ -187,7 +190,7 @@
 
 @media screen and (max-width: 1200px) {
     .mypage-profile__container {
-        padding-inline: 150px;
+        padding-inline: 100px;
     }
 
     .tab {
@@ -215,7 +218,10 @@
         padding: 5px 10px;
     }
 
-    .card__form,
+    .card__form {
+        width: 200px;
+    }
+
     .card__item-img {
         width: 200px;
         height: 200px;
@@ -234,7 +240,8 @@
     }
 
     .tab li a {
-        font-size: 1rem;
+        font-size: 0.8rem;
+        padding-inline: 10px;
     }
 
     .list__container {
@@ -264,7 +271,19 @@
         font-size: 0.8rem;
     }
 
-    .card__form,
+    .evaluation {
+        justify-content: center;
+    }
+
+    .star {
+        font-size: 3rem;
+        margin: 0;
+    }
+
+    .card__form {
+        width: 200px;
+    }
+
     .card__item-img {
         width: 200px;
         height: 200px;
@@ -272,6 +291,16 @@
 
     .card__item-name {
         font-size: 0.9rem;
+    }
+
+    /* 通知数 */
+    .tab__notification {
+        width: 19.2px;
+        font-size: 0.8rem;
+    }
+    .notification {
+        width: 19.2px;
+        font-size: 0.8rem;
     }
 }
 
@@ -284,7 +313,14 @@
         max-width: 230px;
     }
 
-    .card__form,
+    .tab {
+        padding-inline: 20px;
+    }
+
+    .card__form {
+        width: 100px;
+    }
+
     .card__item-img {
         width: 100px;
         height: 100px;
@@ -297,5 +333,9 @@
 
     .card__item-name {
         font-size: 0.5rem;
+    }
+
+    .card__item-status {
+        font-size: 30px;
     }
 }

@@ -59,7 +59,7 @@
                 </div>
                 @endif
                 @if ($chat->message)
-                <input class="message" type="text" value="{{ $chat->message }}" readonly>
+                <input class="message" type="text" name="receiver-message" value="{{ $chat->message }}" readonly>
                 @endif
             </div>
             @else
@@ -69,20 +69,18 @@
                     <p>{{ $user->name }}</p>
                     <img src="{{ asset('storage/'.$receiver->profile->image) }}" alt="ユーザー画像">
                 </div>
-                <form class="message__form" @if($room==null) action="/chat/{{ $product->id }}/{{ $product->sell }}/{{ Auth::id() }}/message" @else action="/chat/{{ $room->product_id }}/{{ $room->seller }}/{{ $room->purchaser }}/message" @endif method="post">
-                    @csrf
-                    <input type="hidden" name="id" value="{{ $chat->id }}">
-                    @if ($chat->image)
-                    <div class="chat__image">
-                        <img src="{{ asset('storage/' . $chat->image) }}" alt="画像メッセージ">
-                    </div>
-                    @endif
-                    @if ($chat->message)
-                    <input class="message" type="text" value="{{ $chat->message }}">
-                    @endif
-                    <button type="submit" name="edit">編集</button>
-                    <button type="submit" name="delete">削除</button>
-                </form>
+                @if ($chat->image)
+                <div class="chat__image">
+                    <img src="{{ asset('storage/' . $chat->image) }}" alt="画像メッセージ">
+                </div>
+                @endif
+                @if ($chat->message)
+                <input id="edit-message{{$chat->id}}" class="message" type="text" name="message" value="{{ $chat->message }}" readonly>
+                @endif
+                <div class="message-button">
+                    <button class="edit-button" type="submit" name="edit" data-id="{{ $chat->id }}">編集</button>
+                    <button class="delete-button" type="submit" name="delete" data-id="{{ $chat->id }}">削除</button>
+                </div>
             </div>
             @endif
             @endforeach
@@ -98,7 +96,7 @@
             </div>
             <form class="message__form" @if($room==null) action="/chat/{{ $product->id }}/{{ $product->sell }}/{{ Auth::id() }}" @else action="/chat/{{ $room->product_id }}/{{ $room->seller }}/{{ $room->purchaser }}" @endif method="post" enctype="multipart/form-data">
                 @csrf
-                <input class="message" type="text" name="message" value="{{ session('chat_message') }}" placeholder="取引メッセージを記入してください">
+                <input id="message" class="message" type="text" name="message" value="{{ session('chat_message') }}" placeholder="取引メッセージを記入してください">
 
                 <div class="file__wrapper">
                     <span id="file__name" style="display: block;"></span>
@@ -142,6 +140,20 @@
         document.documentElement.style.setProperty('--vh', `${vh}px`);
     });
 
+    ["DOMContentLoaded", "resize"].forEach((eventType) => {
+        window.addEventListener(eventType, () => {
+            const headerHeight = document.querySelector('.header__inner').offsetHeight;
+            const containerHeight = document.querySelector('.chat__container').offsetHeight;
+            const partnerHeight = document.querySelector('.chat-partner__wrapper').offsetHeight;
+            const productHeight = document.querySelector('.product__wrapper').offsetHeight;
+            const messageHeight = document.querySelector('.message-send__wrapper').offsetHeight;
+
+            let messageList = document.querySelector('.message-list__wrapper');
+            const resultHeight = containerHeight - (headerHeight + partnerHeight + productHeight + messageHeight);
+            messageList.style.height = resultHeight + 'px';
+        });
+    });
+
     // ファイル選択時にファイル名表示
     function updateLabel(input) {
         const fileNameElement = document.getElementById("file__name");
@@ -151,7 +163,7 @@
     }
 
     // 自動保存処理（入力中にメッセージ保存）
-    document.querySelector('.message').addEventListener('input', function() {
+    document.querySelector('#message').addEventListener('input', function() {
         const formData = {
             _token: document.querySelector('input[name="_token"]').value,
             message: this.value
@@ -172,6 +184,79 @@
                     alert('保存に失敗しました');
                 }
             });
+    });
+
+    // 送信済みメッセージの編集
+    document.querySelectorAll('.edit-button').forEach(button => {
+        button.addEventListener('click', function() {
+            let id = this.dataset.id;
+            let input = document.querySelector('#edit-message' + id);
+
+            input.readOnly = false;
+            input.focus();
+
+            input.addEventListener('blur', async function() {
+                input.readOnly = true;
+                let newMessage = input.value;
+
+                try {
+                    const response = await fetch('/chat/message/edit/' + id, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            message: newMessage
+                        })
+                    });
+
+                    const result = await response.json();
+                    if (response.ok) {
+                        console.log('更新成功:', result.message);
+                    } else {
+                        console.error('更新失敗:', result.message || result);
+                    }
+                } catch (error) {
+                    console.error('通信エラー:', error);
+                }
+            }, {
+                once: true
+            });
+        });
+    });
+
+    // 削除
+    document.querySelectorAll('.delete-button').forEach(button => {
+        button.addEventListener('click', async function() {
+            const id = this.dataset.id;
+
+            if (!confirm('このメッセージを削除しますか？')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/chat/message/delete/' + id, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    }
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    console.log('削除成功:', result);
+                    const wrapper = this.closest('.sender__wrapper');
+                    if (wrapper) wrapper.remove();
+                } else {
+                    console.error('削除失敗:', result.message || result);
+                }
+            } catch (error) {
+                console.error('通信エラー:', error);
+            }
+        });
     });
 </script>
 @endsection

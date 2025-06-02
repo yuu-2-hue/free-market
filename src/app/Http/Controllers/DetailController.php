@@ -17,56 +17,43 @@ class DetailController extends Controller
     // 商品詳細画面の表示
     public function detail(Request $request, $itemId)
     {
-        // 各種データベースを取得
+        $user = Auth::user();
         $product = Product::Find($itemId);
         $condition = Condition::Find($product->condition_id);
         $comments = Comment::with('profile')->where('product_id', $itemId)->get();
-        $favorites = Favorite::with('user')->with('product')->where('product_id', $itemId)->get();
+        $favorites = $user->favorites()->where('product_id', $itemId)->get();
         $keyword = $request->session()->get('keyword');
 
         // いいねしているか取得
-        $isFavorite = false;
-        foreach($favorites as $favorite)
-        {
-            if(Auth::id() == $favorite->user_id) $isFavorite = true;
-        }
-        $request->session()->put('isFavorite', $isFavorite);
+        $isFavorited = $user->favorites()->where('product_id', $itemId)->exists();
 
         // コメント数といいね数を取得
         $commentCount = count($comments);
         $favoriteCount = count($favorites);
 
-        return view('detail', compact('product', 'condition', 'comments', 'commentCount', 'favoriteCount', 'isFavorite', 'keyword'));
+        return view('detail', compact('product', 'condition', 'comments', 'commentCount', 'favoriteCount', 'isFavorited', 'keyword'));
     }
 
     // いいね機能
-    public function addFavorite(Request $request)
+    public function toggle(Request $request, $itemId)
     {
-        if(Auth::check())
-        {
-            $isFavorite = $request->session()->get('isFavorite');
-            $favorites = Favorite::with('user')->with('product')->where('product_id', $request->product_id)->get();
+        $user = Auth::user();
+        $product = Product::findOrFail($itemId);
 
-            if($isFavorite)
-            {
-                foreach($favorites as $favorite)
-                {
-                    if(Auth::id() == $favorite->user_id) $favorite->delete();
-                }
-                $isFavorite = false;
-            }
-            else
-            {
-                Favorite::create([
-                    'user_id' => Auth::id(),
-                    'product_id' => $request->product_id,
-                ]);
-                $isFavorite = true;
-            }
-            $request->session()->put('isFavorite', $isFavorite);
+        $isFavorited = $user->favorites()->where('product_id', $itemId)->exists();
+        if($isFavorited){
+            $user->favorites()->detach($itemId);
+        }
+        else{
+            $user->favorites()->attach($itemId);
         }
 
-        return redirect()->route('detail', $request->product_id);
+        $newCount = $product->favorites()->count();
+
+        return response()->json([
+            'favorited' => !$isFavorited,
+            'count' => $newCount,
+        ]);
     }
 
     // コメント追加機能
@@ -74,13 +61,18 @@ class DetailController extends Controller
     {
         if(Auth::check())
         {
-            Comment::create([
+            $comment = Comment::create([
                 'profile_id' => Auth::id(),
                 'product_id' => $request->product_id,
                 'comment' => $request->comment,
             ]);
         }
 
-        return redirect()->route('detail', $request->product_id);
+        $comment->load('profile');
+
+        return response()->json([
+            'message' => 'コメントを投稿しました。',
+            'comment' => $comment
+        ]);
     }
 }

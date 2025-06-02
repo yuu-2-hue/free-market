@@ -31,40 +31,18 @@
 }
 .goods-button{
     display: flex;
+    gap: 20px;
+    align-items: center;
     text-align: center;
     margin-left: 30px;
 }
-.favorite__button--black, .favorite__button--orange, .comment__button{
-    width: 35px;
-    height: 35px;
-    background: transparent;
-    border: none;
-    outline: none;
-    box-shadow: none;
-    padding: 0;
-    margin-right: 20px;
+.favorite-img.is-active{
+    filter: brightness(0) saturate(100%) invert(80%) sepia(61%) saturate(4859%) hue-rotate(360deg) brightness(104%) contrast(104%);
 }
-.comment__button{
-    color: rgba(0, 0, 0, 1);
+.favorite span, .comment span{
+    display: block;
 }
-.comment__button:hover{
-    color: rgba(0, 0, 0, 1);
-    text-decoration: none;
-}
-.favorite__button--black img, .favorite__button--orange img, .comment__button img{
-    width: 30px;
-    height: 30px;
-}
-.favorite__button--orange img{
-    filter: invert(70%) sepia(50%) saturate(1000%) hue-rotate(345deg) brightness(105%);
-}
-.favorite__button--black img{
-    filter: none;
-}
-.favorite__button--black p, .favorite__button--orange p, .comment__button p{
-    text-align: center;
-    margin: 0;
-}
+
 
 /* 購入手続きボタン */
 .detail-form__button{

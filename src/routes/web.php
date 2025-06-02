@@ -27,19 +27,21 @@ Route::middleware('verified')->group(function () {
     Route::post('/mypage/profile', [ProfileController::class, 'store']);
 
     // いいね
-    Route::post('/item/{item_id}/favorite', [DetailController::class, 'addFavorite']);
+    Route::post('/item/{item_id}/favorite', [DetailController::class, 'toggle'])->name('item.favorite');
     // コメント送信
-    Route::post('/item/{item_id}/comment', [DetailController::class, 'addComment']);
+    Route::post('/item/{item_id}/comment', [DetailController::class, 'addComment'])->name('item.comment');
 
     // 購入処理
     Route::post('/purchase/{item_id}/checkout', [PurchaseController::class, 'store']);
+    Route::get('/purchase/success', [PurchaseController::class, 'success'])->name('purchase.success');
 
     // チャット画面
     Route::get('/chat/{item_id}/{seller_id}/{purchaser_id}', [ChatController::class, 'index'])->name('chat.index');
     Route::post('/chat/{item_id}/{seller_id}/{purchaser_id}', [ChatController::class, 'store']);
     Route::post('/chat/{item_id}/{seller_id}/{purchaser_id}/rating', [ChatController::class, 'rating']);
-    Route::post('/chat/{item_id}/{seller_id}/{purchaser_id}/message', [ChatController::class, 'message']);
     Route::post('/chat/{productId}/{sellId}/{userId}/save-message', [ChatController::class, 'saveMessage']);
+    Route::put('/chat/message/edit/{id}', [ChatController::class, 'edit']);
+    Route::delete('/chat/message/delete/{id}', [ChatController::class, 'destroy']);
 
     Route::middleware('register')->group(function(){
         // 購入画面

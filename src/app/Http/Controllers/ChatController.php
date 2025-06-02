@@ -82,22 +82,23 @@ class ChatController extends Controller
         ]);
     }
 
-    // メッセージ編集・削除
-    public function message(Request $request, $productId, $sellerId, $purchaserId)
+    // メッセージ削除
+    public function destroy($id)
     {
-        $chat = Chat::findOrFail($request->id);
+        $chat = Chat::findOrFail($id);
+        $chat->delete();
 
-        if ($request->has('edit')) {
-            $chat->update(['message' => $request->message]);
-        } elseif ($request->has('delete')) {
-            $chat->delete();
-        }
+        return response()->json(['status' => 'success', 'message' => '削除完了']);
+    }
 
-        return redirect()->route('chat.index', [
-            'item_id' => $productId,
-            'seller_id' => $sellerId,
-            'purchaser_id' => $purchaserId,
-        ]);
+    // メッセージ編集
+    public function edit(Request $request, $id)
+    {
+        $chat = Chat::findOrFail($id);
+        $chat->message = $request->input('message');
+        $chat->save();
+
+        return response()->json(['message' => $chat->message]);
     }
 
     // 評価登録とルーム削除(取引完了)
@@ -108,9 +109,11 @@ class ChatController extends Controller
             ->where('purchaser', $purchaserId)
             ->delete();
 
+        if($request->has('rating')) $rating = $request->rating;
+        else $rating = 0;
         Rating::create([
             'user_id' => $sellerId,
-            'rating' => $request->rating,
+            'rating' => $rating,
         ]);
 
         $user = User::Find(Auth::id());

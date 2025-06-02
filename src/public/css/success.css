@@ -1,0 +1,7 @@
+.success__container{
+    width: 100%;
+    height: calc(100vh - 72px);
+    display: grid;
+    place-content: center;
+    text-align: center;
+}

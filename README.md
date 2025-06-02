@@ -27,17 +27,41 @@
 
 2. `composer install`
 
-3. 「.env.example」ファイルを 「.env」ファイルに命名を変更。または、新しく.envファイルを作成
+3. 「.env.example」ファイルを 「.env」ファイルに命名を変更。または、新しく.envファイルを作成。  
 
-4. .envに以下の環境変数を追加
-``` text
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
-DB_DATABASE=laravel_db
-DB_USERNAME=laravel_user
-DB_PASSWORD=laravel_pass
-```
+4. `.env` に以下の環境変数を追加  
+   ※2台以上のPCでテストする場合、DBが共有されないため、DBを共有するために下記を実行してください。
+
+   - **AパソコンのIPアドレス確認方法**  
+     ※Windowsはコマンドプロンプト、Macはターミナルで実行してください。
+
+     ```bash
+     ipconfig   # Windows  
+     ifconfig   # Mac/Linux（または `ip a`）
+     ```
+
+   - **`.env` 設定例**
+
+     - **Aパソコン**
+       ```env
+       DB_CONNECTION=mysql
+       DB_HOST=mysql
+       DB_PORT=3306
+       DB_DATABASE=laravel_db
+       DB_USERNAME=laravel_user
+       DB_PASSWORD=laravel_pass
+       ```
+
+     - **Bパソコン**
+       ```env
+       DB_CONNECTION=mysql
+       DB_HOST=192.168.1.10  # ← AパソコンのローカルIPアドレス
+       DB_PORT=3306
+       DB_DATABASE=laravel_db
+       DB_USERNAME=laravel_user
+       DB_PASSWORD=laravel_pass
+       ```
+
 5. Mailtrapへログイン  
 下記URLよりmailtrapへログイン  
 <https://mailtrap.io/signin>
